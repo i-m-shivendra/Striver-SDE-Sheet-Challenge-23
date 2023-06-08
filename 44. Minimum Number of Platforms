@@ -1,0 +1,27 @@
+int calculateMinPatforms(int at[], int dt[], int n) {
+   
+    	//sort the arrival and departure array
+    	sort(at,at+n);
+    	sort(dt,dt+n);
+    	//platform_needed indicates the minimum number of platforms
+    	int platform_needed=1,result=1;
+    	int i=1,j=0;
+    	while(i<n && j<n)
+    	{
+    	    //if arrival,increment platform_needed
+    	    if(at[i]<=dt[j])
+    	    {
+    	        platform_needed++;
+    	        i++;
+    	    }
+    	    //if departuire,decrement platform_needed
+    	    else if(at[i]>dt[j])
+    	    {
+    	        platform_needed--;
+    	        j++;
+    	    }
+    	    if(platform_needed>result)
+    	    result=platform_needed;
+    	}
+    	return result;  
+}
