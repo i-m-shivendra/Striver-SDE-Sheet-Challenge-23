@@ -1,0 +1,63 @@
+int solve(int i,vector<int> &values, vector<int> &weights, int n, int w,vector<vector<int>> &dp)
+
+{
+
+ 
+
+    if(n==0  || w==0)
+
+    {
+
+        return 0;
+
+    }
+
+ 
+
+    if(dp[i][w] != -1)
+
+    {
+
+        return dp[i][w];
+
+    }
+
+ 
+
+    if(weights[n-1] <= w)
+
+    {
+
+        return dp[i][w] = max(values[n-1] + solve(i+1,values,weights,n-1,w-weights[n-1],dp),
+
+                solve(i+1,values,weights,n-1,w,dp));
+
+    }
+
+    else if(weights[n-1] > w)
+
+    {
+
+        return  dp[i][w] = solve(i+1,values,weights,n-1,w,dp);
+
+    }
+
+ 
+
+}
+
+ 
+
+int maxProfit(vector<int> &values, vector<int> &weights, int n, int w) {
+
+  
+
+ 
+
+  vector<vector<int>> dp(n + 1, vector<int>(w + 1, -1));
+
+ 
+
+  return solve(0, values, weights, n, w, dp);
+
+}
