@@ -1,0 +1,18 @@
+int maxIncreasingDumbbellsSum(vector<int> &a, int n){
+    if(n==1) return a[0];
+    vector<vector<int>> dp(n, vector<int> (n, 0));
+    for(int i=n-1;i>=0;i--){
+        for(int prev_ind=i-1;prev_ind>=-1;prev_ind--){
+            //Not_take conditon
+            int sum1 = 0 + dp[i+1][prev_ind+1];
+
+            //Take condtion
+            int sum2 = 0;
+            if(prev_ind==-1 || a[i] > a[prev_ind]){
+                sum2 = a[i] + dp[i+1][i];
+            }
+            dp[i][prev_ind+1] = max(sum1,sum2);
+        }
+    }
+    return dp[0][-1+1];
+}
