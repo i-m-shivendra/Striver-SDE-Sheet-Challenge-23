@@ -1,0 +1,48 @@
+
+void addBoard(vector<vector<int>> &board, vector<vector<int>> &res){
+    vector<int> temp;
+    int n = board.size();
+    
+    for(int i=0; i<n; i++){
+        for(int j=0; j<n; j++){
+            temp.push_back(board[i][j]);
+        }
+    }
+
+    res.push_back(temp);
+}
+
+void helper(int col, vector<vector<int>> &board, int n, vector<bool> &leftRow,
+vector<bool> &leftUpperDiagonal, vector<bool> &leftLowerDiagonal, vector<vector<int>> &res){
+    if(col == n){
+        addBoard(board, res);
+        return;
+    }
+
+    for(int row = 0; row < n; row++){
+        if(!leftRow[row] && !leftLowerDiagonal[row+col] && !leftUpperDiagonal[n-1+col-row]){
+            board[row][col] = 1;
+            leftRow[row] = true;
+            leftLowerDiagonal[row+col] = true;
+            leftUpperDiagonal[n-1+col-row] = true;
+            helper(col+1, board, n, leftRow, leftUpperDiagonal, leftLowerDiagonal, res);
+            leftRow[row] = false;
+            leftLowerDiagonal[row+col] = false;
+            leftUpperDiagonal[n-1+col-row] = false;
+            board[row][col] = 0;
+        }
+    }
+}
+
+vector<vector<int>> solveNQueens(int n) {
+    // Write your code here.
+    vector<bool> leftRow(n, false);
+    vector<bool> leftUpperDiagonal(2*n-1, false);
+    vector<bool> leftLowerDiagonal(2*n-1, false);
+
+    vector<vector<int>> res, board(n, vector<int> (n, 0));
+
+    helper(0, board, n, leftRow, leftUpperDiagonal, leftLowerDiagonal, res);
+
+    return res;
+}
