@@ -1,0 +1,19 @@
+#include <bits/stdc++.h> 
+vector<int> countDistinctElements(vector<int> &arr, int k) 
+{
+   unordered_map<int,int> prevFoundIndex , vis;
+   int currDistinctElements = 0;
+   int i = 0 , n = arr.size();
+   vector<int> ans;
+   for(int j=0;i<=n-k;j++){
+       if(!vis[arr[j]] || prevFoundIndex[arr[j]] < i) currDistinctElements++;
+       vis[arr[j]] = 1;
+       prevFoundIndex[arr[j]] = j;
+       if(j >= k-1){
+           ans.push_back(currDistinctElements);
+           if(prevFoundIndex[arr[i]] == i) currDistinctElements--;
+           i++;
+       }
+   }
+   return ans;	
+}
