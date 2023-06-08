@@ -1,0 +1,38 @@
+#include <bits/stdc++.h> 
+
+
+
+vector<int> KMostFrequent(int n, int k, vector<int> &arr)
+{
+    vector<int>ans;
+    priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>mini;
+
+    unordered_map<int,int>mp;
+    for(int i = 0;i<arr.size();i++){ // o(n) array size
+        mp[arr[i]] +=1;
+    }
+    // for(auto pair: mp){
+    //     cout<<pair.first<<"->"<<pair.second<<endl;
+    // }
+
+    for(auto pair :mp){  // o(mlogk) // m is the map size
+        // if(!mini.empty())
+        // cout<<"**"<<mini.top().first<<"->"<<mini.top().second<<"**"<<endl;  
+        if(mini.size()<k){
+          mini.push({pair.second,pair.first});
+        }
+        else{
+            if(mini.top().first<pair.second){
+                mini.pop();
+                mini.push({pair.second,pair.first});
+            }
+        }
+    }
+    // cout<<"->"<<mini.size()<<"<-"<<endl;
+    while(!mini.empty()){
+        ans.push_back(mini.top().second);
+        mini.pop();
+    }
+    sort(ans.begin(),ans.end());
+    return ans;
+}
