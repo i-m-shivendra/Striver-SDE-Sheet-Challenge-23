@@ -1,0 +1,75 @@
+#include<bits/stdc++.h>
+
+ 
+
+unordered_map<string,int> dp;
+
+ 
+
+int solve(string target, vector<string> &arr){
+
+int sz = target.length();
+
+if(sz==0){
+
+ return 1;
+
+}
+
+if(dp[target] != 0){
+
+ return dp[target];
+
+}
+
+for(int i=1; i<=sz; i++){
+
+ int f=0;
+
+ string temp = target.substr(0,i);
+
+ for(int j=0; j<arr.size(); j++){
+
+  if(temp.compare(arr[j]) == 0){
+
+   f=1;
+
+   break;
+
+  }
+
+ }
+
+ if(f==1 && solve(target.substr(i,sz-i),arr) == 1){
+
+  return dp[target] =1;
+
+ }
+
+}
+
+return dp[target]=-1;
+
+}
+
+ 
+
+bool wordBreak(vector < string > & arr, int n, string & target) {
+
+   // Write your code here.
+
+int ans = solve(target,arr);
+
+if(ans == 1){
+
+ return true;
+
+}
+
+else{
+
+ return false;
+
+}
+
+}
