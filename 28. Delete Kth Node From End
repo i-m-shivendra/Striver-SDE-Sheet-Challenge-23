@@ -1,0 +1,32 @@
+
+
+Node *removeKthNode(Node *head, int K) 
+{
+    Node *fast=head;
+    for(int i=0;i<K;i++)
+    {
+        fast=fast->next;
+    }
+ 
+
+    // when the deleted node is to be the last node
+    if(fast==NULL)
+    {
+        Node *curr=head;
+        head=head->next;
+        delete curr;
+        return head;
+    }
+
+    Node *slow=head;
+    while(fast->next != NULL)
+    {
+        slow=slow->next;
+        fast=fast->next;
+    }
+
+    Node *curr=slow->next;
+    slow->next=curr->next;
+    delete curr;
+    return head;
+}
