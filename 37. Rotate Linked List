@@ -1,0 +1,28 @@
+
+
+Node *rotate(Node *head, int k) {
+       
+       if (head == NULL || head->next == NULL || k == 0) 
+          return head;
+      
+        int length = 1;
+        Node *curr = head;
+
+        /* find the end of list */
+        while (curr->next != NULL) 
+        {
+            curr = curr->next;
+            length++;
+        }
+
+        /* form a circle */
+        curr->next = head;
+        k = k % length;
+        for (int i = 0; i < (length - k); i++) 
+        {
+            curr = curr->next;
+        }
+        head = curr->next;
+        curr->next = NULL;
+        return head;
+}
