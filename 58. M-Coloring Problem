@@ -1,0 +1,48 @@
+#include <bits/stdc++.h> 
+
+
+bool canColor (vector<vector<int>> &mat,vector<int>&paint , int n  , int color , int m , int node  ){
+    
+    //check if all relatives are not of color (color)
+   
+    for ( int i=0; i<n; i++){
+        if(i!=node  and mat[node][i]==1 and paint[i]==color)return false;
+    }
+    //no error 
+    return true;
+    
+} 
+
+ bool recur(vector<vector<int>> &mat, vector<int>& paint , int n , int m, int start){
+     
+     // when to break;
+     if(start==n)return true;
+     
+     //try this node with  any possible color 
+     
+     for( int i=1; i<=m ; i++){
+         //if possible to color 
+         if( canColor( mat,paint ,n,i, m,start)){
+             //paint that sh*t
+             paint[start]=i;
+             //check if others accept that rhythm
+             if(recur ( mat, paint , n , m , start+1))return true;
+             //else you painted the wrong bro, leave that unpaint
+             paint[start]=0;
+         }
+         
+       
+        
+     } 
+       // no true return  in any color combination with any node :)
+      return false;
+ }
+string graphColoring(vector<vector<int>> &mat, int m) {
+//     if(m>=3)return "YES";
+    int n = mat.size();
+    int start=0;
+    vector<int>paint(n,0);
+    if(recur(mat,paint , n,m , start))return "YES";
+    return "NO";
+   
+}
