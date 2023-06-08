@@ -1,0 +1,60 @@
+
+
+vector<int> getLeftView(TreeNode<int> *root)
+{
+    vector<int> v;
+
+    if(root == NULL){
+
+        return v;
+
+    }
+
+    queue<TreeNode<int>*> q;
+
+    q.push(root);
+
+    q.push(NULL);
+
+    v.push_back(root->data);
+
+ 
+
+    while(!q.empty()){
+
+        TreeNode<int> *temp = q.front();
+
+        q.pop();
+
+ 
+
+        if(temp == NULL){
+
+            if(!q.empty()){
+
+                q.push(NULL);
+
+                v.push_back(q.front()->data);
+
+            }
+
+        }else{
+
+           if(temp->left!=NULL){
+
+                q.push(temp->left);
+
+            }
+
+            if(temp->right!=NULL){
+
+                q.push(temp->right);
+
+            }
+
+        }
+
+    }
+
+    return v;
+}
