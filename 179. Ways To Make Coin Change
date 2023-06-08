@@ -1,0 +1,44 @@
+#include<bits/stdc++.h>
+//recursion+memoization
+long f(int i, int n, int *denominations, int value, vector<vector<long>> &dp)
+{
+    if(i>=n)
+    return 0;
+    if(value==0)
+    return 1;
+
+    if(dp[i][value] !=-1)
+    return dp[i][value];
+
+    long pick= 0;
+    if(denominations[i]<=value)
+    pick= f(i,n,denominations,value-denominations[i],dp);
+    long npick= f(i+1, n, denominations, value,dp);
+
+    return dp[i][value]=pick+npick;
+}
+long countWaysToMakeChange(int *denominations, int n, int value)
+{
+    // vector<vector<long>> dp(n, vector<long> (value+1,-1));
+    //return f(0,n,denominations,value,dp);
+
+    //tabulation with space optimization
+    vector<long> after(value+1),cur(value+1);
+    for(int i=0; i<n; i++)
+    cur[0]=1;
+    for(int i=n-1 ;i>=0; i--)
+    {
+        for(int t= 1; t<=value; t++)
+        {
+            long pick= 0, npick=0;
+            if(denominations[i]<=t)
+            pick= cur[t-denominations[i]];
+            if(i<n-1)
+            npick= after[t];
+
+            cur[t]=pick+npick;
+        }
+        after=cur;
+    }
+    return cur[value];
+}
